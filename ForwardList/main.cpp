@@ -1,11 +1,11 @@
-#include <iostream>
+Ôªø#include <iostream>
 using namespace std;
 #define tab "\t"
 
 class Element
 {
-	int Data;		//ÁÌ‡˜ÂÌËÂ ˝ÎÂÏÂÌÚ‡
-	Element* pNext; //ÛÍ‡Á‡ÚÂÎ¸ Ì‡ ÒÎÂ‰Û˛˘ËÈ ˝ÎÂÏÂÌÚ
+	int Data;		//–∑–Ω–∞—á–µ–Ω–∏–µ —ç–ª–µ–º–µ–Ω—Ç–∞
+	Element* pNext; //—É–∫–∞–∑–∞—Ç–µ–ª—å –Ω–∞ —Å–ª–µ–¥—É—é—â–∏–π —ç–ª–µ–º–µ–Ω—Ç
 public:
 	Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
 	{
@@ -35,13 +35,13 @@ public:
 	//					Adding elements:
 	void push_front(int Data)
 	{
-		//1) —ÓÁ‰‡ÂÏ ÌÓ‚˚È ˝ÎÂÏÂÌÚ:
+		//1) –°–æ–∑–¥–∞–µ–º –Ω–æ–≤—ã–π —ç–ª–µ–º–µ–Ω—Ç:
 		Element* New = new Element(Data);
 
-		//2) ¬ÍÎ˛˜‡ÂÏ ÌÓ‚˚È ˝ÎÂÏÂÌÚ ‚ ÒÔËÒÓÍ:
+		//2) –í–∫–ª—é—á–∞–µ–º –Ω–æ–≤—ã–π —ç–ª–µ–º–µ–Ω—Ç –≤ —Å–ø–∏—Å–æ–∫:
 		New->pNext = Head;
 
-		//3) œÂÂ‚Ó‰ËÏ „ÓÎÓ‚Û Ì‡ ÌÓ‚˚È ˝ÎÂÏÂÌÚ
+		//3) –ü–µ—Ä–µ–≤–æ–¥–∏–º –≥–æ–ª–æ–≤—É –Ω–∞ –Ω–æ–≤—ã–π —ç–ª–µ–º–µ–Ω—Ç
 		Head = New;
 	}
 
@@ -49,17 +49,17 @@ public:
 	{
 		if (Head == nullptr) return push_front(Data);
 		
-		//1) ƒÓıÓ‰ËÏ ‰Ó ÍÓÌˆ‡ ÒÔËÒÍ‡:
+		//1) –î–æ—Ö–æ–¥–∏–º –¥–æ –∫–æ–Ω—Ü–∞ —Å–ø–∏—Å–∫–∞:
 		Element* Temp = Head;
 		while (Temp->pNext)
 		{
 			Temp = Temp->pNext;
 		}
 
-		//2) —ÓÁ‰‡ÂÏ ÌÓ‚˚È ˝ÎÂÏÂÌÚ
+		//2) –°–æ–∑–¥–∞–µ–º –Ω–æ–≤—ã–π —ç–ª–µ–º–µ–Ω—Ç
 		Element* New = new Element(Data);
 
-		//3) ¬ÍÎ˛˜‡ÂÏ ÌÓ‚˚È ˝ÎÂÏÂÌÚ ‚ ÒÔËÒÓÍ:
+		//3) –í–∫–ª—é—á–∞–µ–º –Ω–æ–≤—ã–π —ç–ª–µ–º–µ–Ω—Ç –≤ —Å–ø–∏—Å–æ–∫:
 		Temp->pNext = New;
 	}
 
@@ -107,13 +107,13 @@ public:
 	void print()const
 	{
 		cout << "Head:\t" << Head << endl;
-		Element* Temp = Head;	//Temp - ˝ÚÓ ËÚÂ‡ÚÓ
-		//»ÚÂ‡ÚÓ - ˝ÚÓ ÛÍ‡Á‡ÚÂÎ¸, ÔË ÔÓÏÓ˘Ë ÍÓÚÓÓ„Ó ÏÓÊÌÓ ÔÂÂ·Ë‡Ú¸
-		//˝ÎÂÏÂÌÚ˚ ÒÚÛÍÚÛ˚ ‰‡ÌÌ˚ı.
+		Element* Temp = Head;	//Temp - —ç—Ç–æ –∏—Ç–µ—Ä–∞—Ç–æ—Ä
+		//–ò—Ç–µ—Ä–∞—Ç–æ—Ä - —ç—Ç–æ —É–∫–∞–∑–∞—Ç–µ–ª—å, –ø—Ä–∏ –ø–æ–º–æ—â–∏ –∫–æ—Ç–æ—Ä–æ–≥–æ –º–æ–∂–Ω–æ –ø–µ—Ä–µ–±–∏—Ä–∞—Ç—å
+		//—ç–ª–µ–º–µ–Ω—Ç—ã —Å—Ç—Ä—É–∫—Ç—É—Ä—ã –¥–∞–Ω–Ω—ã—Ö.
 		while (Temp)
 		{
 			cout << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-			Temp = Temp->pNext; //œÂÂıÓ‰ Ì‡ ÒÎÂ‰Û˛˘ËÈ ˝ÎÂÏÂÌÚ
+			Temp = Temp->pNext; //–ü–µ—Ä–µ—Ö–æ–¥ –Ω–∞ —Å–ª–µ–¥—É—é—â–∏–π —ç–ª–µ–º–µ–Ω—Ç
 		}
 	}
 };
@@ -124,8 +124,8 @@ void main()
 
 	int n;
 	int index;
-	cout << "¬‚Â‰ËÚÂ ÍÓÎË˜ÂÒÚ‚Ó ˝ÎÂÏÂÌÚÓ‚: "; cin >> n;
-	cout << "¬‚Â‰ËÚÂ ËÌ‰ÂÍÒ ‰Ó·‡‚ÎˇÂÏÓ„Ó ˝ÎÂÏÂÌÚ‡: "; cin >> index;
+	cout << "–í–≤–µ–¥–∏—Ç–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —ç–ª–µ–º–µ–Ω—Ç–æ–≤: "; cin >> n;
+	cout << "–í–≤–µ–¥–∏—Ç–µ –∏–Ω–¥–µ–∫—Å –¥–æ–±–∞–≤–ª—è–µ–º–æ–≥–æ —ç–ª–µ–º–µ–Ω—Ç–∞: "; cin >> index;
 	//Element element(5);
 	ForwardList list;
 	for (int i = 0; i < n; i++)
@@ -139,7 +139,7 @@ void main()
 	//list.pop_back();
 	list.insert(321, index);
 	list.print();
-	cout << "¬‚Â‰ËÚÂ ËÌ‰ÂÍÒ Û‰‡ÎˇÂÏÓ„Ó ˝ÎÂÏÂÌÚ‡: "; cin >> index;
+	cout << "–í–≤–µ–¥–∏—Ç–µ –∏–Ω–¥–µ–∫—Å —É–¥–∞–ª—è–µ–º–æ–≥–æ —ç–ª–µ–º–µ–Ω—Ç–∞: "; cin >> index;
 	list.erase(index);
 	list.print();
 }
