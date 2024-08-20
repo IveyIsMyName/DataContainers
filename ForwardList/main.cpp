@@ -43,7 +43,7 @@ public:
 		*this = other;   //здесь просто вызываем CopyAssignment
 		cout << "LCopyConstructor: " << this << endl;
 	}
-	ForwardList(const ForwardList&& other)
+	ForwardList(ForwardList&& other) 
 	{
 		*this = std::move(other);
 		cout << "MoveConstructor: " << this << endl;
