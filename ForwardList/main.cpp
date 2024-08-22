@@ -5,9 +5,9 @@ using std::cin;
 using std::endl;
 #define tab "\t"
 
-
 class Element
 {
+protected:
 	int Data;		//значение элемента
 	Element* pNext; //указатель на следующий элемент
 	static int count;
@@ -30,7 +30,6 @@ class ForwardList
 	Element* Head;
 	unsigned int size;
 public:
-	
 	ForwardList()
 	{
 		Head = nullptr;
@@ -68,7 +67,7 @@ public:
 	{
 		Element* Current;
 	public:
-		Iterator(Element* ptr) :Current(ptr){}
+		Iterator(Element* ptr = nullptr) :Current(ptr){}
 		~Iterator() {}
 
 	//			Оператор разыменования
@@ -83,47 +82,46 @@ public:
 			Current = Current->pNext;
 			return *this;
 		}
-
+	
 	//			Операторы проверки на равенство
 		bool operator!=(const Iterator& other)const
 		{
-			return Current != other.Current;
+			return this->Current != other.Current;
 		}
 		bool operator==(const Iterator& other)const
 		{
-			return Current == other.Current;
+			return this->Current == other.Current;
 		}
-
 	};
 
 	class ConstIterator
 	{
-		Element* current;
+		Element* Сurrent;
 	public:
-		ConstIterator(Element* ptr) :current(ptr) {}
+		ConstIterator(Element* ptr) :Сurrent(ptr) {}
 		~ConstIterator() {}
 
 		//			Оператор разыменования
 		const int& operator*()
 		{
-			return current->Data;
+			return Сurrent->Data;
 		}
 
 		//			Оператор инкремента
 		ConstIterator& operator++()
 		{
-			current = current->pNext;
+			Сurrent = Сurrent->pNext;
 			return *this;
 		}
 
 		//			Операторы проверки на равенство
 		bool operator!=(const ConstIterator& other)const
 		{
-			return current != other.current;
+			return Сurrent != other.Сurrent;
 		}
 		bool operator==(const ConstIterator& other)const
 		{
-			return current == other.current;
+			return Сurrent == other.Сurrent;
 		}
 
 	};
@@ -136,6 +134,14 @@ public:
 	Iterator end()
 	{
 		return Iterator(nullptr);
+	}
+	ConstIterator begin()const
+	{
+		return ConstIterator(Head);
+	}
+	ConstIterator end()const
+	{
+		return ConstIterator(nullptr);
 	}
 
 	//			Operators:
