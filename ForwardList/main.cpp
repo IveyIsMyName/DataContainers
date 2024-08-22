@@ -30,36 +30,133 @@ class ForwardList
 	Element* Head;
 	unsigned int size;
 public:
+	
 	ForwardList()
 	{
 		Head = nullptr;
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
-	ForwardList(const ForwardList& other)
+	ForwardList(const initializer_list<int>& il) :ForwardList()
+	{
+		//initializer_list - это контейнер.
+		cout << typeid(il.begin()).name() << endl;
+		for (int const* it = il.begin(); it != il.end(); it++)
+		{
+			push_back(*it);
+		}
+	}
+	ForwardList(const ForwardList& other) :ForwardList()
 	{
 		/*for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
 			push_back(Temp->Data);*/
 		*this = other;   //здесь просто вызываем CopyAssignment
 		cout << "LCopyConstructor: " << this << endl;
 	}
-	ForwardList(ForwardList&& other) 
+	ForwardList(ForwardList&& other) noexcept :ForwardList()
 	{
 		*this = std::move(other);
-		cout << "MoveConstructor: " << this << endl;
+		cout << "LMoveConstructor: " << this << endl;
 	}
 	~ForwardList()
 	{
 		while (Head)pop_front();
 		cout << "LDestructor:\t" << this << endl;
 	}
+
+	class Iterator
+	{
+		Element* Current;
+	public:
+		Iterator(Element* ptr) :Current(ptr){}
+		~Iterator() {}
+
+	//			Оператор разыменования
+		int& operator*()
+		{
+			return Current->Data;
+		}
+
+	//			Оператор инкремента
+		Iterator& operator++()
+		{
+			Current = Current->pNext;
+			return *this;
+		}
+
+	//			Операторы проверки на равенство
+		bool operator!=(const Iterator& other)const
+		{
+			return Current != other.Current;
+		}
+		bool operator==(const Iterator& other)const
+		{
+			return Current == other.Current;
+		}
+
+	};
+
+	class ConstIterator
+	{
+		Element* current;
+	public:
+		ConstIterator(Element* ptr) :current(ptr) {}
+		~ConstIterator() {}
+
+		//			Оператор разыменования
+		const int& operator*()
+		{
+			return current->Data;
+		}
+
+		//			Оператор инкремента
+		ConstIterator& operator++()
+		{
+			current = current->pNext;
+			return *this;
+		}
+
+		//			Операторы проверки на равенство
+		bool operator!=(const ConstIterator& other)const
+		{
+			return current != other.current;
+		}
+		bool operator==(const ConstIterator& other)const
+		{
+			return current == other.current;
+		}
+
+	};
+
+	//			Методы Begin и End
+	Iterator begin()
+	{
+		return Iterator(Head);
+	}
+	Iterator end()
+	{
+		return Iterator(nullptr);
+	}
+
+	//			Operators:
 	ForwardList& operator=(const ForwardList& other)
 	{
 		if (this == &other)return *this;
 		while (Head)pop_front();
 		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
 			push_front(Temp->Data);
-		cout << "CopyAssignment: " << this << endl;
+		reverse();
+		cout << "LCopyAssignment: " << this << endl;
+		return *this;
+	}
+	ForwardList& operator=(ForwardList&& other) noexcept
+	{
+		if (this == &other)return *this;
+		while (Head)pop_front();
+		this->Head = other.Head;
+		this->size = other.size;
+		other.Head = nullptr;
+		other.size = 0;
 		return *this;
 	}
 
@@ -146,6 +243,18 @@ public:
 		size--;
 	}
 	//				Methods:
+	void reverse()
+	{
+		ForwardList buffer;
+		while (Head)
+		{
+			buffer.push_front(Head->Data);
+			pop_front();
+		}
+		this->Head = buffer.Head;
+		this->size = buffer.size;
+		buffer.Head = nullptr;
+	}
 	void print()const
 	{
 		cout << "Head:\t" << Head << endl;
@@ -168,6 +277,8 @@ int Element::count = 0;
 
 //#define BASE_CHECK
 //#define COUNT_CHECK
+//#deinfe ASSIGNMENT_CHECK
+//#define RANGE_BASED_FOR_ARRAY
 
 void main()
 {
@@ -212,9 +323,10 @@ void main()
 	list2.print();
 #endif // BASE_CHECK
 
+#ifdef ASSIGNMENT_CHECK
 	int n;
 	cout << "Введите количество элементов: "; cin >> n;
-	
+
 	ForwardList list;
 	for (int i = 0; i < n; i++)
 	{
@@ -225,5 +337,29 @@ void main()
 
 	ForwardList list2 = list;		//CopyConstructor
 	list2.print();
-	
+#endif // ASSIGNMENT_CHECK
+
+#ifdef RANGE_BASED_FOR_ARRAY
+	int arr[] = { 3, 5, 8, 13, 21 };
+	for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	{
+		cout << arr[i] << tab;
+	}
+	cout << endl;
+
+	//Range-based for:
+	for (int i : arr)
+	{
+		cout << i << tab;
+	}
+	cout << endl;
+#endif // RANGE_BASED_FOR_ARRAY
+
+	ForwardList list = { 3, 5, 8, 13, 21 };
+	//list.print();
+	for (int i : list)
+	{
+		cout << i << tab;
+	}
+	cout << endl;
 }
