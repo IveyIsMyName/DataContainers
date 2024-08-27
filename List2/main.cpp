@@ -50,10 +50,11 @@ public:
 		}
 		else
 		{
-			Element* New = new Element(Data);
+			/*Element* New = new Element(Data);
 			New->pNext = Head;
 			Head->pPrev = New;
-			Head = New;
+			Head = New;*/
+			Head = Head->pPrev = new Element(Data, Head);
 		}
 		size++;
 	}
@@ -65,14 +66,52 @@ public:
 		}
 		else
 		{
-			Element* New = new Element(Data);
+			/*Element* New = new Element(Data);
 			New->pPrev = Tail;
 			Tail->pNext = New;
-			Tail = New;
+			Tail = New;*/
+			Tail = Tail->pNext = new Element(Data, nullptr, Tail);
 		}
 		size++;
 	}
+	void insert(int Data, int Index)
+	{
+		if (Index < 0 || Index > size)return;
+		Element* Temp;
+		if (Index < size / 2)
+		{
+			Temp = Head;
+			for (int i = 0; i < Index; i++)Temp = Temp->pNext;
+		}
+		else
+		{
+			Temp = Tail;
+			for (int i = 0; i < size - Index - 1; i++)Temp = Temp->pPrev;
+		}
+		Temp->pPrev = Temp->pPrev->pNext = new Element(Data, Temp, Temp->pPrev);
+		
+		size++;
+	}
 	//			Removing elements:
+	void erase(int Index)
+	{
+		if (Index < 0 || Index >= size)return;
+		Element* Temp;
+		if (Index < size / 2)
+		{
+			Temp = Head;
+			for (int i = 0; i < Index; i++)Temp = Temp->pNext;
+		}
+		else
+		{
+			Temp = Tail;
+			for (int i = size - 1; i > Index; i--)Temp = Temp->pPrev;
+		}
+		Temp->pPrev->pNext = Temp->pNext;
+		if (Temp->pNext != nullptr)Temp->pNext->pPrev = Temp->pPrev;
+		delete Temp;
+		size--;
+	}
 	void pop_front()
 	{
 		if (Head == nullptr && Tail == nullptr)return;
@@ -141,4 +180,18 @@ void main()
 	}
 	list.print();
 	list.reverse_print();
+
+	int value;
+	int index;
+	cout << "Введите индекс добавляемого элемента: "; cin >> index;
+	cout << "Введите значение добавляемого элемента: "; cin >> value;
+	list.insert(value, index);
+	list.print();
+	list.reverse_print();
+	cout << "Введите индекс удаляемого элемента: "; cin >> index;
+	list.erase(index);
+	list.print();
+	list.reverse_print();
+
+
 }
