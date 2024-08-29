@@ -210,6 +210,8 @@ public:
 		while (Tail)pop_back();
 		cout << "LDestructor:\t" << this << endl;
 	}
+
+	//			Operators:
 	List& operator=(const List& other)
 	{
 		if (this == &other)return *this;
