@@ -67,7 +67,6 @@ public:
 		{
 			cout << "ConstItDestructor:" << this << endl;
 		}
-
 		ConstIterator& operator++()	//Prefix increment
 		{
 			Temp = Temp->pNext;
@@ -354,6 +353,11 @@ List operator+(const List& left, const List& right)
 	for (List::ConstIterator it = right.begin(); it != right.end(); ++it)result.push_back(*it);
 	return result;
 }
+void Grow(List& list)
+{
+	for (List::Iterator it = list.begin(); it != list.end(); ++it)
+		*it *= 10;
+}
 
 //#define BASE_CHECK
 
@@ -397,8 +401,8 @@ void main()
 	List list1 = { 3, 5, 8, 13, 21 };
 	List list2 = { 34, 55, 89, 144, 233 };
 	List list3 = list1 + list2;
-	for (int i : list1)cout << i << tab; cout << endl;
-	for (int i : list2)cout << i << tab; cout << endl;
+	//for (int i : list1)cout << i << tab; cout << endl;
+	//for (int i : list2)cout << i << tab; cout << endl;
+	Grow(list3);
 	for (int i : list3)cout << i << tab; cout << endl;
-	
 }
