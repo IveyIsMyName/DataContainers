@@ -281,7 +281,7 @@ public:
 	}
 };
 
-class Stack :ForwardList      //LIFO
+class Stack :public ForwardList      //LIFO
 {
 public:
 	void push(int Data)
@@ -398,11 +398,11 @@ void main()
 #endif // RANGE_BASED_FOR_LIST
 
 	Stack stack;
-	/*stack.push(3);
+	stack.push(3);
 	stack.push(5);
 	stack.push(8);
 	stack.push(13);
-	stack.push(21);*/
+	stack.push(21);
 	cout << "Size of the stack before:" << stack.size_of_stack() << endl;
 
 	while (!stack.empty())
