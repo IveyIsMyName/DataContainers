@@ -25,6 +25,7 @@ class List
 			cout << "EDestructor:\t" << this << endl;
 		}
 		friend class List;
+		friend class Queue;
 	}*Head, *Tail;
 	size_t size;
 	class ConstBaseIterator
@@ -345,6 +346,7 @@ public:
 		cout << "Количество элементов списка: " << size << endl;
 		cout << delimiter << endl;
 	}
+	friend class Queue;
 };
 List operator+(const List& left, const List& right)
 {
@@ -358,8 +360,31 @@ void Grow(List& list)
 	for (List::Iterator it = list.begin(); it != list.end(); ++it)
 		*it *= 10;
 }
+class Queue : public List			//FIFO
+{
+public:
+	void enqueue(int Data)
+	{
+		push_back(Data);
+	}
+	int dequeue()
+	{
+		int Data = Head->Data;
+		pop_front();
+		return Data;
+	}
+	int size_of_queue()const
+	{
+		return size;
+	}
+	bool empty()const
+	{
+		return List::Head == nullptr;
+	}
+};
 
 //#define BASE_CHECK
+//#define ITERATORS_CHECK
 
 void main()
 {
@@ -390,13 +415,14 @@ void main()
 	list.reverse_print();
 #endif // BASE_CHECK
 
+#ifdef ITERATORS_CHECK
 	//list.print();
-	//list.reverse_print();
-	/*for (List::ReverseIterator it = list3.rbegin(); it != list3.rend(); ++it)
-	{
-		cout << *it << tab;
-	}
-	cout << endl;*/
+//list.reverse_print();
+/*for (List::ReverseIterator it = list3.rbegin(); it != list3.rend(); ++it)
+{
+	cout << *it << tab;
+}
+cout << endl;*/
 
 	List list1 = { 3, 5, 8, 13, 21 };
 	List list2 = { 34, 55, 89, 144, 233 };
@@ -405,4 +431,20 @@ void main()
 	//for (int i : list2)cout << i << tab; cout << endl;
 	Grow(list3);
 	for (int i : list3)cout << i << tab; cout << endl;
+#endif // ITERATORS_CHECK
+
+	Queue queue;
+	queue.enqueue(3);
+	queue.enqueue(5);
+	queue.enqueue(8);
+	queue.enqueue(13);
+	queue.enqueue(21);
+
+	cout << "Size of the queue before: " << queue.size_of_queue() << endl;
+	while (!queue.empty())
+	{
+		cout << queue.dequeue() << endl;
+	}
+	cout << "Size of the queue after: " << queue.size_of_queue() << endl;
+	
 }
