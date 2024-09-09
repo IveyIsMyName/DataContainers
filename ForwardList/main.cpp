@@ -23,10 +23,12 @@ public:
 		cout << "EDestructor:\t" << this << endl;
 	}
 	friend class ForwardList;
+	friend class Stack;
 };
 
 class ForwardList
 {
+protected:
 	Element* Head;
 	unsigned int size;
 public:
@@ -62,7 +64,7 @@ public:
 		while (Head)pop_front();
 		cout << "LDestructor:\t" << this << endl;
 	}
-
+	
 	class Iterator
 	{
 		Element* Current;
@@ -279,12 +281,36 @@ public:
 	}
 };
 
+class Stack :ForwardList      //LIFO
+{
+public:
+	void push(int Data)
+	{
+		push_front(Data);
+	}
+	int pop()
+	{
+		int Data = Head->Data;
+		pop_front();
+		return Data;
+	}
+	int size_of_stack()const
+	{
+		return size;
+	}
+	bool empty()const
+	{
+		return ForwardList::Head == nullptr;
+	}
+};
+
 int Element::count = 0;
 
 //#define BASE_CHECK
 //#define COUNT_CHECK
 //#deinfe ASSIGNMENT_CHECK
 //#define RANGE_BASED_FOR_ARRAY
+//#define RANGE_BASED_FOR_LIST
 
 void main()
 {
@@ -361,6 +387,7 @@ void main()
 	cout << endl;
 #endif // RANGE_BASED_FOR_ARRAY
 
+#ifdef RANGE_BASED_FOR_LIST
 	ForwardList list = { 3, 5, 8, 13, 21 };
 	//list.print();
 	for (int i : list)
@@ -368,4 +395,20 @@ void main()
 		cout << i << tab;
 	}
 	cout << endl;
+#endif // RANGE_BASED_FOR_LIST
+
+	Stack stack;
+	/*stack.push(3);
+	stack.push(5);
+	stack.push(8);
+	stack.push(13);
+	stack.push(21);*/
+	cout << "Size of the stack before:" << stack.size_of_stack() << endl;
+
+	while (!stack.empty())
+	{
+		cout << stack.pop() << endl;
+	}
+	cout << "Size of the stack after:" << stack.size_of_stack() << endl;
+	
 }
