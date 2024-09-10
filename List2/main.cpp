@@ -360,7 +360,7 @@ void Grow(List& list)
 	for (List::Iterator it = list.begin(); it != list.end(); ++it)
 		*it *= 10;
 }
-class Queue : public List			//FIFO
+class Queue : List			//FIFO
 {
 public:
 	void enqueue(int Data)
