@@ -281,7 +281,7 @@ public:
 	}
 };
 
-class Stack :public ForwardList      //LIFO
+class Stack :ForwardList      //LIFO
 {
 public:
 	void push(int Data)
