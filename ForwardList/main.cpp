@@ -4,10 +4,10 @@ using std::cout;
 using std::cin;
 using std::endl;
 #define tab "\t"
+#define delimiter "\n---------------------------------------\n"
 
 class Element
 {
-protected:
 	int Data;		//значение элемента
 	Element* pNext; //указатель на следующий элемент
 	static int count;
@@ -20,7 +20,10 @@ public:
 	~Element()
 	{
 		count--;
+#ifdef DEBUG
 		cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	friend class ForwardList;
 	friend class Stack;
@@ -284,9 +287,18 @@ public:
 class Stack :ForwardList      //LIFO
 {
 public:
-	void push(int Data)
+	const int& top()const
+	{
+		return Head->Data;
+	}
+	int& top() //позволяет изменить вершину стека
+	{
+		return Head->Data;
+	}
+	int push(int Data)
 	{
 		push_front(Data);
+		return Head->Data;
 	}
 	int pop()
 	{
@@ -300,7 +312,25 @@ public:
 	}
 	bool empty()const
 	{
-		return ForwardList::Head == nullptr;
+		return Head == nullptr;
+	}
+	void swap(Stack& other)
+	{
+		Element* buffer_head = this->Head;
+		this->Head = other.Head;
+		other.Head = buffer_head;
+
+		int bufferSize = this->size;
+		this->size = other.size;
+		other.size = bufferSize;
+	}
+	void info()const
+	{
+		cout << delimiter << endl;
+		cout << this << ":\n";
+		cout << "Size: " << size << endl;
+		for (int i : (*this))cout << i << tab << endl;;
+		cout << delimiter << endl;
 	}
 };
 
@@ -403,12 +433,21 @@ void main()
 	stack.push(8);
 	stack.push(13);
 	stack.push(21);
-	cout << "Size of the stack before:" << stack.size_of_stack() << endl;
 
-	while (!stack.empty())
-	{
-		cout << stack.pop() << endl;
-	}
-	cout << "Size of the stack after:" << stack.size_of_stack() << endl;
-	
+	//cout << "Size of the stack before:" << stack.size_of_stack() << endl;
+	stack.info();
+
+	//while (!stack.empty())
+	//{
+	//	cout << stack.pop() << endl;
+	//}
+	//cout << "Size of the stack after:" << stack.size_of_stack() << endl;
+
+	Stack stack2;
+	stack2.push(34);
+	stack2.push(55);
+	stack2.push(89);
+	stack2.info();
+	stack2.swap(stack);
+	stack2.info();
 }
